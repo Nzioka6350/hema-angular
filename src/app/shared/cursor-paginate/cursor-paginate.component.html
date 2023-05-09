@@ -1,0 +1,11 @@
+<div style="font-size: large;" class="hstack gap-3">
+    <h5 mat-subheader class="ms-auto">
+        Items per page: <span class="ms-1">{{perPage}}</span>
+    </h5>
+    <button (click)="paginate.emit(prevCursor)" [disabled]="prevCursor===null" mat-icon-button>
+        <mat-icon>chevron_left</mat-icon>
+    </button>
+    <button (click)="paginate.emit(nextCursor)" [disabled]="nextCursor===null" mat-icon-button>
+        <mat-icon>chevron_right</mat-icon>
+    </button>
+</div>

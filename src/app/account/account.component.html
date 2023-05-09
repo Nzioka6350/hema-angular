@@ -1,0 +1,54 @@
+<ng-template [ngIf]="auth.loggedInUserModel.hasValue()">
+    <mat-toolbar>
+        <mat-toolbar-row class="px-sm-5 px-3 gap-0">
+            <button mat-button>
+                Home</button>
+            <button disabled mat-button>
+                <mat-icon>arrow_forward_ios</mat-icon>Account</button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="py-3 py-sm-5">
+        <mat-card [class.shadow-none]="isHandset$|async" class="mx-auto" style="max-width: 550px;">
+            <div class="hstack justify-content-between px-3">
+                <h2>Account</h2>
+                <!-- <button [mat-menu-trigger-for]="menu" mat-icon-button>
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon>delete_forever</mat-icon>
+                        Delete read
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>done</mat-icon>
+                        Mark all as read
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>settings</mat-icon>
+                        Notification settings
+                    </button>
+                </mat-menu> -->
+            </div>
+            <div class="px-3">
+                <h3 class="mb-0">{{auth.loggedInUserModel.selected[0].name|titlecase}}</h3>
+                <div class="hstack justify-content-between">
+                    <p>{{auth.loggedInUserModel.selected[0].email|lowercase}}</p>
+                    <button (click)="auth.logout()" color="warn" mat-button>
+                        <mat-icon>logout</mat-icon>
+                        Sign out
+                    </button>
+                </div>
+            </div>
+            <!-- <mat-divider></mat-divider>
+            <mat-chip-listbox (change)="uiMode.set($event.value)" class="m-3"
+                [value]="uiMode.is_dark_mode?'dark':'light'" aria-label="Notification status">
+                <mat-chip-option [selectable]="uiMode.is_dark_mode" [value]="'light'">
+                    <mat-icon matChipTrailingIcon>light_mode</mat-icon>
+                    Light</mat-chip-option>
+                <mat-chip-option [selectable]="!uiMode.is_dark_mode" [value]="'dark'">
+                    <mat-icon matChipTrailingIcon>dark_mode</mat-icon>
+                    Dark</mat-chip-option>
+            </mat-chip-listbox> -->
+        </mat-card>
+    </div>
+</ng-template>

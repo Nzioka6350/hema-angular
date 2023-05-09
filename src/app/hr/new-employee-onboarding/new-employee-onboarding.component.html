@@ -1,0 +1,46 @@
+<div mat-dialog-title>
+    <div class="hstack justify-content-between">
+        <h3 class="m-0" mat-subheader>New Employee</h3>
+        <button mat-dialog-close mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <form id="bursaryAddForm" (ngSubmit)="submit()" [formGroup]="leaveTypeAdd" class="vstack gap-2">
+        <mat-form-field color="accent" appearance="fill">
+            <mat-label>Name</mat-label>
+            <!-- <mat-hint>Name of leave</mat-hint> -->
+            <input required formControlName="name" type="text" matInput>
+            <mat-error *ngFor="let error of leaveTypeAdd.controls.name.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea cdkTextareaAutosize [cdkAutosizeMinRows]="3" [cdkAutosizeMaxRows]="5" required formControlName="description" matInput></textarea>
+            <mat-error *ngFor="let error of leaveTypeAdd.controls.description.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="fill">
+            <mat-label>Maximum allocation in days</mat-label>
+            <input [min]="1" required formControlName="max_allocation" type="number" matInput>
+            <mat-error *ngFor="let error of leaveTypeAdd.controls.max_allocation.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="fill">
+            <mat-label>Applicable after(in days)</mat-label>
+            <input [min]="0" required formControlName="applicable_after" type="number" matInput>
+            <mat-error *ngFor="let error of leaveTypeAdd.controls.applicable_after.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+        <!--  -->
+        <mat-checkbox formControlName="is_without_pay">Leave is without pay</mat-checkbox>
+        <mat-checkbox formControlName="includes_holidays">Leave includes holidays</mat-checkbox>
+        <mat-checkbox formControlName="includes_holidays">Allow over allocation</mat-checkbox>
+    </form>
+</mat-dialog-content>
+<!-- <mat-divider></mat-divider> -->
+<mat-dialog-actions align="end">
+    <button [disabled]="load" type="submit" form="bursaryAddForm" color="primary" mat-raised-button>Submit</button>
+</mat-dialog-actions>

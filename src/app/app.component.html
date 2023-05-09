@@ -1,0 +1,6 @@
+<ng-template [ngIf]="auth.loggedInUserModel.hasValue()">
+    <ng-template [ngIf]="loading.loading$|async">
+        <mat-progress-bar mode="query" color="accent"></mat-progress-bar>
+    </ng-template>
+    <app-home></app-home>
+</ng-template>

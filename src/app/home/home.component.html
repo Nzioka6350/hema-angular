@@ -1,0 +1,117 @@
+<div>
+  <nav backgroundColor="accent" class="mat-elevation-z2" *ngIf="!(isHandset$|async)" mat-tab-nav-bar
+    mat-align-tabs="center" fitInkBarToContent [tabPanel]="tabPanel">
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'hr'" routerLink="hr">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>badge</mat-icon>
+        <span>HR</span>
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'crm'" routerLink="crm">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>support_agent</mat-icon>
+        CRM
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'manufacturing'" routerLink="manufacturing">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>factory</mat-icon>
+        Manufacturing
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'projects'" routerLink="projects">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>folder_open</mat-icon>
+        Projects
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'tools'" routerLink="tools">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>build</mat-icon>
+        Tools
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'users'" routerLink="users">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>groups</mat-icon>
+        Users
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'integrations'" routerLink="integrations">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>webhook</mat-icon>
+        Integrations
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'notifications'" routerLink="notifications">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon *ngIf="notifications.notificationsSelectionModel.isEmpty()">notifications</mat-icon>
+        <mat-icon *ngIf="notifications.notificationsSelectionModel.hasValue()">notifications_active</mat-icon>
+        Notifications
+      </div>
+    </a>
+    <a mat-tab-link [active]="outlet.activatedRouteData['active'] === 'account'" routerLink="account">
+      <div class="hstack gap-3 align-items-center">
+        <mat-icon>account_circle</mat-icon>
+        account
+      </div>
+    </a>
+  </nav>
+  <mat-divider></mat-divider>
+  <ng-template [ngIf]="isHandset$ | async">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button (click)="drawer.open()" mat-icon-button>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Menu</span>
+        <button class="ms-auto" [matBadgeHidden]="notifications.notificationsSelectionModel.isEmpty()"
+          matBadgeColor="accent" [matBadge]="notifications.notificationsSelectionModel.selected.length"
+          routerLink="notifications" mat-icon-button>
+          <mat-icon *ngIf="notifications.notificationsSelectionModel.isEmpty()">notifications</mat-icon>
+          <mat-icon *ngIf="notifications.notificationsSelectionModel.hasValue()">notifications_active</mat-icon>
+        </button>
+        <button routerLink="account" mat-icon-button>
+          <mat-icon>person_3</mat-icon>
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+        <mat-toolbar>
+          <button class="ms-auto" (click)="drawer.close()" mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-toolbar>
+        <mat-nav-list>
+          <a mat-list-item routerLink="hr">
+            <mat-icon>badge</mat-icon>
+            HR</a>
+          <a mat-list-item routerLink="crm">
+            <mat-icon>support_agent</mat-icon>
+            CRM</a>
+          <a mat-list-item routerLink="hr">
+            <mat-icon>factory</mat-icon>
+            Manufacturing</a>
+          <a mat-list-item routerLink="hr">
+            <mat-icon>folder_open</mat-icon>
+            Projects</a>
+          <a mat-list-item routerLink="hr">
+            <mat-icon>build</mat-icon>
+            Tools</a>
+          <a mat-list-item routerLink="hr">
+            <mat-icon>groups</mat-icon>
+            Users</a>
+          <a mat-list-item routerLink="integrations">
+            <mat-icon>webhook</mat-icon>
+            Integrations</a>
+          <!-- <a mat-list-item href="#">Link 3</a> -->
+        </mat-nav-list>
+      </mat-sidenav>
+    </mat-sidenav-container>
+  </ng-template>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet #outlet="outlet"></router-outlet>
+  </mat-tab-nav-panel>
+</div>

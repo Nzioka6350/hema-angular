@@ -1,0 +1,14 @@
+<div style="max-width: 600px;" class="mx-auto vstack h-100 justify-content-center align-items-center">
+    <img src="../../assets/invalid.svg" style="width: 300px;" alt="">
+    <div>
+        <h1>Invalid Session</h1>
+        <span>Possible causes</span>
+        <ul>
+            <li>Revoked invitation</li>
+            <li>Expired invitation</li>
+            <li>Credentials not in the system</li>
+        </ul>
+        <p>Please contact support for assistance</p>
+        <button (click)="auth.get(true)" color="primary" mat-flat-button>Retry</button>
+    </div>
+</div>

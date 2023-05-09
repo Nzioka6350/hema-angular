@@ -1,0 +1,62 @@
+<!-- <h3>Growers</h3> -->
+<button (click)="addGrower()" class="ms-auto mt-3" mat-button>
+    New Grower
+    <mat-icon>add</mat-icon>
+</button>
+<h1>Coffee Growers</h1>
+
+<div class="col-md-10 col-12 mx-auto py-3">
+    <ng-template [ngIf]="growers">
+        <mat-card class="overflow-auto">
+            <mat-paginator *ngIf="growers" [showFirstLastButtons]="true" (page)="paginate($event)"
+                [length]="growers.total" [pageSize]="growers.per_page"></mat-paginator>
+            <mat-form-field color="accent">
+                <mat-label>Search</mat-label>
+                <input matInput #input />
+                <mat-icon matIconSuffix>search</mat-icon>
+            </mat-form-field>
+            <table style="font-size: small;" mat-table [dataSource]="growers.data" class="mat-elevation-z8">
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.name }}
+                    </td>
+                </ng-container>
+
+                <!-- code Column -->
+                <ng-container matColumnDef="code">
+                    <th mat-header-cell *matHeaderCellDef>Code</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.code }}
+                    </td>
+                </ng-container>
+
+                <!-- created Column -->
+                <ng-container matColumnDef="created">
+                    <th mat-header-cell *matHeaderCellDef>Created</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.created_at|date:'mediumDate' }}
+                    </td>
+                </ng-container>
+
+                <!-- updated Column -->
+                <ng-container matColumnDef="updated">
+                    <th mat-header-cell *matHeaderCellDef>Updated</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.updated_at|date:'mediumDate' }}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr [matMenuTriggerData]="{type: row}" [matMenuTriggerFor]="typeMenu" mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </mat-card>
+        <mat-menu xPosition="before" #typeMenu="matMenu">
+            <ng-template matMenuContent let-type="type">
+                <button (click)="editGrower(type)" mat-menu-item><mat-icon>edit</mat-icon>EDIT</button>
+                <button (click)="delete(type)" mat-menu-item><mat-icon>delete</mat-icon>DELETE</button>
+            </ng-template>
+        </mat-menu>
+    </ng-template>
+</div>

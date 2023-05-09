@@ -1,0 +1,63 @@
+<div class="py-sm-5 py-3">
+    <mat-card [class.shadow-none]="isHandset$|async" class="mx-auto" style="max-width: 550px;">
+        <div class="hstack justify-content-between pe-1">
+            <h2 matSubheader>Notifications</h2>
+            <button [mat-menu-trigger-for]="menu" mat-icon-button>
+                <mat-icon>more_horiz</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button (click)="deleteRead()" mat-menu-item>
+                    <mat-icon>delete_forever</mat-icon>
+                    Delete read
+                </button>
+                <button (click)="markAsRead()" mat-menu-item>
+                    <mat-icon>done</mat-icon>
+                    Mark all as read
+                </button>
+                <button mat-menu-item>
+                    <mat-icon>settings</mat-icon>
+                    Notification settings
+                </button>
+            </mat-menu>
+        </div>
+        <div class="hstack">
+            <mat-chip-listbox (change)="statusSelectionModel.select($event.value)" class="mx-3"
+                [value]="statusSelectionModel.selected[0]" aria-label="Notification status">
+                <mat-chip-option color="accent" [selectable]="!statusSelectionModel.isSelected('all')"
+                    [value]="'all'">All</mat-chip-option>
+                <mat-chip-option color="accent" [selectable]="!statusSelectionModel.isSelected('unread')"
+                    [value]="'unread'">Unread</mat-chip-option>
+                <mat-chip-option color="accent" [selectable]="!statusSelectionModel.isSelected('new')" color="accent"
+                    [value]="'new'" *ngIf="notificationsService.notificationsSelectionModel.hasValue()">Show
+                    {{notificationsService.notificationsSelectionModel.selected.length}} new
+                    {{notificationsService.notificationsSelectionModel.selected.length|i18nPlural:{'=1':'notification',
+                    'other':'notifications'} }}</mat-chip-option>
+            </mat-chip-listbox>
+        </div>
+        <ng-template [ngIf]="statusSelectionModel.isSelected('new')" [ngIfElse]="all_or_unread">
+            <mat-nav-list>
+                <mat-list-item [routerLink]="notification.id" [class.accent]="uiMode.is_dark_mode"
+                    *ngFor="let notification of notificationsService.notificationsSelectionModel.selected">
+                    <!-- <button disabled matListItemAvatar class="shadow-none" mat-fab></button> -->
+                    <mat-icon matListItemIcon>fiber_manual_record</mat-icon>
+                    <h4 matListItemTitle>{{notification.title|titlecase}}</h4>
+                    <p matListItemLine>{{notification.description}}</p>
+                </mat-list-item>
+            </mat-nav-list>
+        </ng-template>
+        <ng-template #all_or_unread>
+            <mat-nav-list>
+                <mat-list-item [routerLink]="notification.id"
+                    *ngFor="let notification of notifications">
+                    <mat-icon *ngIf="notification.read_at===null" matListItemIcon>fiber_manual_record</mat-icon>
+                    <button *ngIf="notification.read_at!==null" disabled matListItemAvatar mat-fab></button>
+                    <h4 matListItemTitle>{{notification.data.title|titlecase}}</h4>
+                    <p matListItemLine>{{notification.data.description}}</p>
+                    <span matListItemMeta>
+                        {{notification.created_at|date}}
+                    </span>
+                </mat-list-item>
+            </mat-nav-list>
+        </ng-template>
+    </mat-card>
+</div>

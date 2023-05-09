@@ -1,0 +1,34 @@
+<div class="py-sm-5 py-3">
+    <mat-card [class.shadow-none]="isHandset$|async" *ngIf="notification" class="mx-auto overflow-hidden" style="max-width: 550px;">
+        <div class="px-3">
+            <div class="hstack justify-content-between">
+                <h3>{{notification.data.title|titlecase}}</h3>
+                <button [mat-menu-trigger-for]="menu" mat-icon-button>
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button (click)="delete()" mat-menu-item>
+                        <mat-icon>delete_forever</mat-icon>
+                        Delete
+                    </button>
+                </mat-menu>
+            </div>
+            <p>{{notification.data.description}}</p>
+        </div>
+        <mat-divider></mat-divider>
+        <div matTooltip="created at" class="p-3 hstack gap-2 primary">
+            <mat-icon>schedule</mat-icon>
+            <span>{{notification.created_at|date:'long'}}</span>
+        </div>
+        <ng-template [ngIf]="notification.read_at">
+            <mat-divider></mat-divider>
+            <div matTooltip="read at" class="p-3 hstack gap-2">
+                <mat-icon color="accent">done_all</mat-icon>
+                <span>{{notification.read_at|date:'long'}}</span>
+            </div>
+        </ng-template>
+        <!-- <mat-card-actions align="end">
+            <button color="accent" mat-button>Sign out of all devices</button>
+        </mat-card-actions> -->
+    </mat-card>
+</div>

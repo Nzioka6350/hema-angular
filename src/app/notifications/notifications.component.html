@@ -1,0 +1,22 @@
+<ng-template [ngIf]="auth.loggedInUserModel.hasValue()">
+    <mat-toolbar>
+        <mat-toolbar-row class="px-sm-5 px-3 gap-0">
+            <button (click)="navigate(['/'])" mat-button>
+                Home</button>
+            <button (click)="navigate(['/notifications'])" [disabled]="outlet.activatedRouteData['active']==='list'"
+                mat-button>
+                <mat-icon>arrow_forward_ios</mat-icon>Notifications</button>
+            <ng-template [ngIf]="outlet.activatedRouteData['active']==='detail'&&!(isHandset$|async)">
+                <button disabled mat-button>
+                    <mat-icon>arrow_forward_ios</mat-icon>
+                    {{outlet.activatedRoute.snapshot.paramMap.get('notification_id')}}
+                </button>
+            </ng-template>
+            <ng-template [ngIf]="outlet.activatedRouteData['active']==='detail'&&(isHandset$|async)">
+                <button mat-button disabled>
+                    <mat-icon>arrow_forward_ios</mat-icon>Detail</button>
+            </ng-template>
+        </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet #outlet="outlet"></router-outlet>
+</ng-template>

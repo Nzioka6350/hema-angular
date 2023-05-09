@@ -1,0 +1,56 @@
+<div class="py-3">
+    <button (click)="addType()" mat-button>
+        <mat-icon>add</mat-icon>
+        New Coffee Type
+    </button>
+    <h1>Coffee Types</h1>
+    <mat-card class="overflow-auto">
+        <app-cursor-paginate *ngIf="coffeeTypes" [prevCursor]="coffeeTypes.prev_cursor"
+            [nextCursor]="coffeeTypes.next_cursor" [perPage]="coffeeTypes.per_page"></app-cursor-paginate>
+        <mat-form-field color="accent">
+            <mat-label>Search</mat-label>
+            <input matInput #input />
+            <mat-icon matIconSuffix>search</mat-icon>
+        </mat-form-field>
+        <table *ngIf="coffeeTypes" mat-table [dataSource]="coffeeTyepesDataBehaviorSubject"
+            class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Created Column -->
+            <ng-container matColumnDef="created">
+                <th mat-header-cell *matHeaderCellDef> Created </th>
+                <td mat-cell *matCellDef="let element"> {{element.created_at|date:'mediumDate'}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Updated Column -->
+            <ng-container matColumnDef="updated">
+                <th mat-header-cell *matHeaderCellDef> Updated </th>
+                <td mat-cell *matCellDef="let element"> {{element.updated_at|date:'mediumDate'}} </td>
+            </ng-container>
+
+            <!-- grades_count Column -->
+            <ng-container matColumnDef="grades_count">
+                <th mat-header-cell *matHeaderCellDef> Grades Count </th>
+                <td mat-cell *matCellDef="let element"> {{element.grades.length}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr [matMenuTriggerData]="{type: row}" [matMenuTriggerFor]="typeMenu" mat-row
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </mat-card>
+    <mat-menu xPosition="before" #typeMenu="matMenu">
+        <ng-template matMenuContent let-type="type">
+            <button (click)="edit(type)" mat-menu-item><mat-icon>edit</mat-icon>EDIT</button>
+            <button (click)="delete(type)" mat-menu-item><mat-icon>delete</mat-icon>DELETE</button>
+        </ng-template>
+    </mat-menu>
+</div>

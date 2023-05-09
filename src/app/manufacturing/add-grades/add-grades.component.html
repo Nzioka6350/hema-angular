@@ -1,0 +1,22 @@
+<mat-toolbar>
+    <div class="w-100 hstack">
+    </div>
+    <div class="w-100 hstack justify-content-center">
+        <h2>New Grade</h2>
+    </div>
+    <div class="w-100 hstack justify-content-end">
+        <button mat-dialog-close mat-icon-button class="ms-auto">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<form (ngSubmit)="submit()" class="m-3 vstack gap-3" [formGroup]="newGradeFormGroup">
+    <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+        <mat-label>Coffee Grade</mat-label>
+        <input formControlName="name" type="text" matInput>
+        <mat-error *ngFor="let error of newGradeFormGroup.controls.name.errors?.['backend']">{{error}}
+        </mat-error>
+    </mat-form-field>
+    <button [disabled]="newGradeFormGroup.disabled" style="width: fit-content;" type="submit" color="accent" mat-raised-button>Submit</button>
+</form>

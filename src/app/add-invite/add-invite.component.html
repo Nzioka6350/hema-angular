@@ -1,0 +1,31 @@
+<mat-toolbar color="primary">
+    <h4>New Invite</h4>
+    <button (click)="close_fn()" class="ms-auto" mat-icon-button>
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-toolbar>
+<div class="p-3">
+    <p>Only invited emails have acces to the system</p>
+</div>
+<form (ngSubmit)="submit()" [formGroup]="newInvite" class="vstack gap-3 px-3 pt-3">
+    <mat-form-field color="accent">
+        <mat-icon matIconPrefix>mail</mat-icon>
+        <mat-label>Email</mat-label>
+        <input required formControlName="email" autocomplete="email" type="email" matInput>
+        <mat-error *ngFor="let error of newInvite.controls.email.errors?.['backend']">{{error}}</mat-error>
+    </mat-form-field>
+    <mat-checkbox formControlName="revokes_automaticaly" #revokes>Invitation revokes automaticaly</mat-checkbox>
+    <ng-template [ngIf]="revokes.checked">
+        <mat-form-field color="accent">
+            <!-- <mat-icon matIconPrefix>calendar_today</mat-icon> -->
+            <div matTextSuffix>DAYS</div>
+            <mat-label>Revokes after </mat-label>
+            <input formControlName="revokes_in" [min]="1" type="number" matInput>
+            <mat-error *ngFor="let error of newInvite.controls.revokes_in.errors?.['backend']">{{error}}</mat-error>
+            <mat-hint>Number of days</mat-hint>
+        </mat-form-field>
+    </ng-template>
+    <div>
+        <button [disabled]="load" color="primary" mat-raised-button>Submit</button>
+    </div>
+</form>

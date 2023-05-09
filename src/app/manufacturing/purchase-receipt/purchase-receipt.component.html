@@ -1,0 +1,22 @@
+<div class="py-3">
+    <button (click)="addPurchaseReceipt()" mat-button>
+        <mat-icon>add</mat-icon>
+        New Purchase Receipt
+    </button>
+    <h1>Purchase Receipts</h1>
+
+    <ng-template [ngIf]="purchaseReceipt?.data">
+        <mat-list *ngFor="let recept of purchaseReceipt?.data">
+            <mat-list-item>
+                <ng-template [ngIf]="recept.grower">
+                    <span>{{recept.grower.name}}</span>
+                </ng-template>
+                <span>{{recept.bags_in}}</span>
+                <span>{{recept.bags_in}}</span>
+                <mat-action-row>
+                    <button mat-flat-button (click)="generatePDF()">Generate Reciept</button>
+                </mat-action-row>
+            </mat-list-item>
+        </mat-list>
+    </ng-template>
+</div>

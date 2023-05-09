@@ -1,0 +1,54 @@
+<div class="hstack align-items-start h-100">
+    <div [class.border-right]="sidenav!==undefined" class="w-100 h-100">
+        <mat-toolbar color="primary" class="mat-elevation-z1">
+            <mat-toolbar-row>
+                <h1>Join Invites</h1>
+                <!-- <button color="primary" class="ms-auto" mat-raised-button>
+                    <mat-icon>logout</mat-icon>
+                    Sign out
+                </button> -->
+            </mat-toolbar-row>
+            <mat-toolbar-row class="justify-content-between">
+                <div class="hstack gap-3">
+                    <button [disabled]="sidenav==='add-invite'" (click)="sidenav='add-invite'" mat-button>
+                        <mat-icon>add</mat-icon>
+                        Sent Invite
+                    </button>
+                    <button mat-icon-button>
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                </div>
+
+                <div class="hstack gap-3">
+                    <div class="hstack gap-2">
+                        <div class="rounded-2 p-1">
+                            5
+                        </div>
+                        Revoked
+                    </div>
+                    |
+                    <div class="hstack gap-2">
+                        <div class="rounded-2 p-1">
+                            2
+                        </div>
+                        Joined
+                    </div>
+                    |
+                    <div class="hstack gap-2">
+                        <div class="rounded-2 p-1">
+                            1
+                        </div>
+                        Expired
+                    </div>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="vstack h-100">
+            <app-cursor-paginate></app-cursor-paginate>
+            <div style="width: 100%; height: 400px;" #chart_div></div>
+        </div>
+    </div>
+    <ng-template [ngIf]="sidenav==='add-invite'">
+        <app-add-invite class="h-100" (close)="$event===true?close():undefined"></app-add-invite>
+    </ng-template>
+</div>

@@ -1,0 +1,121 @@
+<div class="px-sm-5 px-3 hstack justify-content-between align-items-center gap-3 gap-sm-5 py-3">
+    <mat-chip-listbox [disabled]="leavesTypes===undefined||leavesTypes.data.length===0" [value]="'all'"
+        aria-label="Notification status">
+        <mat-chip-option [value]="'all'">All</mat-chip-option>
+        <mat-chip-option [value]="'available'">Available</mat-chip-option>
+    </mat-chip-listbox>
+    <div class="hstack gap-3 gap-sm-5">
+        <app-cursor-paginate *ngIf="leavesTypes" [nextCursor]="leavesTypes.next_cursor" [prevCursor]="leavesTypes.prev_cursor" [perPage]="leavesTypes.per_page"></app-cursor-paginate>
+        <button [disabled]="leavesTypes===undefined||leavesTypes.data.length===0" mat-button>
+            <mat-icon>download</mat-icon>
+            Export Data
+        </button>
+        <button mat-button>
+            <mat-icon>upload</mat-icon>
+            Import Data
+        </button>
+        <button (click)="new_leave_type()" color="primary" mat-raised-button>
+            <mat-icon>add</mat-icon>
+            New Leave Type
+        </button>
+    </div>
+</div>
+<div class="px-sm-5 px-3 hstack gap-1 align-items-start pb-3">
+    <ng-template [ngIfElse]="no_leave_types" [ngIf]="leavesTypes&&leavesTypes.data.length">
+        <mat-accordion class="w-100 ms-auto">
+            <mat-expansion-panel [class.bg-whitesmoke]="odd" [hideToggle]="odd"
+                *ngFor="let leave of leavesTypes.data;let odd=odd;">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        {{leave.name|titlecase}}
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        last edited {{leave.updated_at|date:'long'}}
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>{{leave.description}}</p>
+
+                <table mat-table [dataSource]="[leave]">
+                    <!-- max_allocation Column -->
+                    <ng-container matColumnDef="max_allocation">
+                        <th mat-header-cell *matHeaderCellDef> Max Allocation(Days) </th>
+                        <td mat-cell *matCellDef="let element"> {{element.max_allocation}} </td>
+                    </ng-container>
+
+                    <!-- applicable_after Column -->
+                    <ng-container matColumnDef="applicable_after">
+                        <th mat-header-cell *matHeaderCellDef> Apllicable after(Days) </th>
+                        <td mat-cell *matCellDef="let element"> {{element.applicable_after}} </td>
+                    </ng-container>
+
+                    <!-- is_without_pay Column -->
+                    <ng-container matColumnDef="is_without_pay">
+                        <th mat-header-cell *matHeaderCellDef> With pay </th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-template [ngIfElse]="with_pay" [ngIf]="element.is_without_pay">
+                                <mat-icon color="warn">close</mat-icon>
+                            </ng-template>
+                            <ng-template #with_pay>
+                                <mat-icon color="accent">check</mat-icon>
+                            </ng-template>
+                        </td>
+                    </ng-container>
+
+                    <!-- allow_over_allocation Column -->
+                    <ng-container matColumnDef="allow_over_allocation">
+                        <th mat-header-cell *matHeaderCellDef>Over allocation allowed</th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-template [ngIfElse]="no_over_allocation" [ngIf]="element.allow_over_allocation">
+                                <mat-icon color="accent">check</mat-icon>
+                            </ng-template>
+                            <ng-template #no_over_allocation>
+                                <mat-icon color="warn">close</mat-icon>
+                            </ng-template>
+                        </td>
+                    </ng-container>
+
+                    <!-- includes_holidays Column -->
+                    <ng-container matColumnDef="includes_holidays">
+                        <th mat-header-cell *matHeaderCellDef> Inludes holidays </th>
+                        <td mat-cell *matCellDef="let element">
+                            <ng-template [ngIfElse]="holidays_not_included" [ngIf]="element.includes_holidays">
+                                <mat-icon color="accent">check</mat-icon>
+                            </ng-template>
+                            <ng-template #holidays_not_included>
+                                <mat-icon color="warn" color="warn">close</mat-icon>
+                            </ng-template>
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-action-row class="gap-3">
+                    <button (click)="delete(leave)" color="warn" mat-button>
+                        <mat-icon>delete_forever</mat-icon>
+                        Delete
+                    </button>
+                    <ng-template [ngIfElse]="leave_unavailable" [ngIf]="leave.available">
+                        <button (click)="avail(leave, false)" color="warn" mat-button>
+                            <mat-icon>block</mat-icon>
+                            Unavail
+                        </button>
+                    </ng-template>
+                    <ng-template #leave_unavailable>
+                        <button (click)="avail(leave, true)" color="accent" mat-button>
+                            <mat-icon>check</mat-icon>
+                            Make available
+                        </button>
+                    </ng-template>
+                    <button color="accent" mat-raised-button>
+                        <mat-icon>edit</mat-icon>
+                        Change
+                    </button>
+                </mat-action-row>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </ng-template>
+    <ng-template #no_leave_types>
+        <h3 class="mx-auto py-3" mat-subheader>No leave type available</h3>
+    </ng-template>
+</div>

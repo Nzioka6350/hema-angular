@@ -1,0 +1,24 @@
+<div class="hstack justify-content-end align-items-center gap-3 gap-sm-5 py-3">
+    <div class="hstack gap-3 gap-sm-5">
+        <app-cursor-paginate *ngIf="employeeOnboarbing" [nextCursor]="employeeOnboarbing.next_cursor"
+            [prevCursor]="employeeOnboarbing.prev_cursor" [perPage]="employeeOnboarbing.per_page"></app-cursor-paginate>
+        <button
+            [disabled]="employeeOnboarbing===null||employeeOnboarbing===undefined||employeeOnboarbing.data.length===0"
+            mat-button>
+            <mat-icon>download</mat-icon>
+            Export Data
+        </button>
+        <button mat-button>
+            <mat-icon>upload</mat-icon>
+            Import Data
+        </button>
+        <button (click)="new_employee_onboarding_type()" color="accent" mat-raised-button>
+            <mat-icon>add</mat-icon>
+            New Employee
+        </button>
+    </div>
+</div>
+<mat-error *ngIf="error">
+    {{error}}
+</mat-error>
+<div class="mat-elevation-z1" style="width: 100%; height: 100%;" #chart_div></div>

@@ -1,0 +1,44 @@
+<div mat-dialog-title>
+    <div class="hstack justify-content-between">
+        <h3 class="m-0" mat-subheader>New Employee</h3>
+        <button mat-dialog-close mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <form id="employeeAddForm" (ngSubmit)="submit()" [formGroup]="newEmployee" class="vstack gap-2">
+        <mat-form-field color="accent" appearance="fill">
+            <mat-label>Name</mat-label>
+            <!-- <mat-hint>Name of leave</mat-hint> -->
+            <input required formControlName="name" type="text" matInput>
+            <mat-error *ngFor="let error of newEmployee.controls.name.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="fill">
+            <mat-label>User</mat-label>
+            <!-- <mat-hint>Name of leave</mat-hint> -->
+            <input [matAutocomplete]="users_auto" required formControlName="user_id" type="text" matInput>
+            <mat-error *ngFor="let error of newEmployee.controls.user_id.errors?.['backend']">{{error}}
+            </mat-error>
+            <mat-autocomplete #users_auto="matAutocomplete">
+                <mat-option *ngFor="let option of  users?.data" [value]="option.id">
+                    {{option.name|uppercase}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Date of joining</mat-label>
+            <input required formControlName="date_of_joining" matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-checkbox formControlName="notify">Notify User</mat-checkbox>
+    </form>
+</mat-dialog-content>
+<!-- <mat-divider></mat-divider> -->
+<mat-dialog-actions align="end">
+    <button [disabled]="load" type="submit" form="employeeAddForm" color="primary" mat-raised-button>Submit</button>
+</mat-dialog-actions>

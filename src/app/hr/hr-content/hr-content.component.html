@@ -1,0 +1,12 @@
+<div class="px-sm-5 px-3 pt-sm-5 py-3">
+  <nav color="accent" fitInkBarToContent mat-tab-nav-bar [mat-stretch-tabs]="false" [tabPanel]="tabPanel">
+    <a mat-tab-link routerLink="/hr" [active]="outlet.activatedRouteData['active'] === 'employee'">Employees</a>
+    <a mat-tab-link routerLink="onboarding"
+      [active]="outlet.activatedRouteData['active'] === 'employee-onboarding'">Onboarding</a>
+    <a routerLink="casual" mat-tab-link [active]="outlet.activatedRouteData['active'] === 'casual'">Casual Workers</a>
+  </nav>
+  <mat-divider></mat-divider>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet #outlet="outlet"></router-outlet>
+  </mat-tab-nav-panel>
+</div>

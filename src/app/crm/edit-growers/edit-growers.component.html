@@ -1,0 +1,36 @@
+<mat-toolbar>
+    <div class="w-100 hstack">
+    </div>
+    <div class="w-100 hstack justify-content-center">
+        <h2>Edit Grower</h2>
+    </div>
+    <div class="w-100 hstack justify-content-end">
+        <button mat-dialog-close mat-icon-button class="ms-auto">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<mat-dialog-content>
+    <form (ngSubmit)="submit()" class="vstack gap-3" [formGroup]="newGrowerFormGroup">
+        <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+            <mat-label>Grower's Name</mat-label>
+            <input formControlName="name" type="text" matInput>
+            <mat-error *ngFor="let error of newGrowerFormGroup.controls.name.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+            <mat-label>Grower's Code</mat-label>
+            <input formControlName="code" type="text" matInput>
+            <mat-error *ngFor="let error of newGrowerFormGroup.controls.code.errors?.['backend']">{{error}}
+            </mat-error>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-actions class="justify-content-between px-4">
+    <button (click)="delete()" mat-button>
+        Delete {{grower?.name|uppercase}}?
+    </button>
+    <button (click)="submit()" type="submit" color="accent" mat-raised-button>Submit</button>
+</mat-dialog-actions>

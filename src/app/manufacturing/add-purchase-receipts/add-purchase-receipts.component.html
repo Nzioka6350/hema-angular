@@ -1,0 +1,90 @@
+<mat-toolbar>
+    <div class="w-100 hstack">
+    </div>
+    <div class="w-100 hstack justify-content-center">
+        <h2>New Purchase Receipt</h2>
+    </div>
+    <div class="w-100 hstack justify-content-end">
+        <button mat-dialog-close mat-icon-button class="ms-auto">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
+<mat-divider></mat-divider>
+<form (ngSubmit)="submit()" [formGroup]="newPurchaseReceiptFormGroup">
+    <mat-dialog-content>
+        <div class="vstack gap-3">
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Grower</mat-label>
+                <!-- <mat-select required formControlName="grower" [multiple]="false">
+                    <mat-option *ngFor="let grower of growers?.data" [value]="grower.id">{{grower.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.grower_id.errors?.['backend']">{{error}}
+                </mat-error> -->
+
+
+                <input [matAutocomplete]="grower" formControlName="grower_id" type="text" matInput>
+            <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.grower_id.errors?.['backend']">{{error}}
+            </mat-error>
+            <mat-autocomplete #grower="matAutocomplete">
+                <mat-option *ngFor="let option of  growers?.data" [value]="option.id">
+                    {{option.name|uppercase}}
+                </mat-option>
+            </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Types Delivered</mat-label>
+                <mat-select required formControlName="coffee_types" multiple>
+                    <mat-option *ngFor="let coffeeType of coffeeTypes?.data"
+                        [value]="coffeeType.id">{{coffeeType.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.coffee_types.errors?.['backend']">{{error}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>No. of bags in outturn</mat-label>
+                <input formControlName="bags_in_outturn" required type="number" matInput>
+                <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.bags_in_outturn.errors?.['backend']">{{error}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>No. of bags in Delivery</mat-label>
+                <input formControlName="bags_in_delivery" required type="number" matInput>
+                <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.bags_in_delivery.errors?.['backend']">{{error}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Delivery Vehicle No.</mat-label>
+                <input formControlName="delivery_vehicle_no" required type="text" matInput>
+                <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.delivery_vehicle_no.errors?.['backend']">{{error}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Store</mat-label>
+                <input formControlName="store" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Floor</mat-label>
+                <input formControlName="floor" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Row</mat-label>
+                <input formControlName="row" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Bay</mat-label>
+                <input formControlName="bay" type="text" matInput>
+            </mat-form-field>
+            <mat-form-field [subscriptSizing]="'dynamic'" color="accent">
+                <mat-label>Bags In</mat-label>
+                <input formControlName="bags_in" required type="text" matInput>
+                <mat-error *ngFor="let error of newPurchaseReceiptFormGroup.controls.bags_in.errors?.['backend']">{{error}}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="px-3">
+        <button [disabled]="newPurchaseReceiptFormGroup.disabled" style="width: fit-content;" type="submit"
+            color="accent" mat-raised-button>Submit</button>
+    </mat-dialog-actions>
+</form>
